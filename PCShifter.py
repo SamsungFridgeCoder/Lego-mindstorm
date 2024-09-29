@@ -1,6 +1,5 @@
 import serial
-import keyboard  # Not used in the script but you may need it for keypress simulations
-import json
+import keyboard  # For simulating key presses
 
 # Connect to the LEGO hub over USB/Serial
 ser = serial.Serial('COM3', 115200, timeout=1)  # Adjust the port as needed
@@ -13,12 +12,10 @@ try:
                 data = ser.readline().decode().strip()  # Read data from LEGO hub
                 if '+' in data:
                     print("SHIFTING UP")
-                    # You can simulate key presses using the keyboard module here if needed
-                    # keyboard.press_and_release('shift+up')  # Example for keypress simulation
+                    keyboard.press_and_release('e')  # Simulate pressing 'E' for upshift
                 else:
                     print("SHIFTING DOWN")
-                    # Simulate a different key press if needed
-                    # keyboard.press_and_release('shift+down')
+                    keyboard.press_and_release('q')  # Simulate pressing 'Q' for downshift
             except Exception as e:
                 print(f"An error occurred: {e}")
 except KeyboardInterrupt:
