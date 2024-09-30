@@ -8,9 +8,8 @@ ser = serial.Serial('COM3', 115200, timeout=1)  # Adjust the port as needed
 gamepad = xgamepad.Gamepad()
 
 def map_motor_position_to_trigger(motor_position):
-    # Map the motor position (0-100) to trigger value (0-255)
-    # XGamepad expects values in the range of 0-255 for triggers
-    return int((motor_position / 100.0) * 255)
+    # Map the motor position (0-100) to a trigger value (0.0 - 1.0)
+    return motor_position / 100.0
 
 try:
     while True:
@@ -21,7 +20,7 @@ try:
             # Convert the line to an integer (assuming motor position is sent as an integer)
             motor_position = int(line)
             
-            # Map the motor position to the trigger value (0-255)
+            # Map the motor position to a trigger value between 0.0 and 1.0
             trigger_value = map_motor_position_to_trigger(motor_position)
             
             # Set the right trigger value on the virtual gamepad
