@@ -25,7 +25,7 @@ try:
             
             # Set the right trigger value on the virtual gamepad
             gamepad.right_trigger_float(trigger_value)
-            
+            print(f"Mapped motor position {motor_position} to trigger value {trigger_value}")
             # Update the gamepad state
             gamepad.update()
 
