@@ -1,5 +1,6 @@
 import serial
 import vgamepad as vg
+import json
 
 # Connect to the LEGO hub over USB/Serial
 ser = serial.Serial('COM3', 115200, timeout=1)  # Adjust the port as needed
@@ -27,8 +28,9 @@ try:
         print(f"Raw value: {line}")
         if line:
             try:
-                # Convert the line to an integer (assuming motor position is sent as an integer)
-                motor_position = int(line)
+                # Split the line to separate the integer value from the JSON object
+                parts = line.split(' ', 1)
+                motor_position = int(parts[0])
                 
                 # Map the motor position to a trigger value between 0.0 and 1.0
                 trigger_value = map_motor_position_to_trigger(motor_position)
