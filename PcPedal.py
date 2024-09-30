@@ -1,11 +1,11 @@
 import serial
-import xgamepad
+import vgamepad as vg
 
 # Connect to the LEGO hub over USB/Serial
 ser = serial.Serial('COM3', 115200, timeout=1)  # Adjust the port as needed
 
 # Initialize the virtual gamepad
-gamepad = xgamepad.Gamepad()
+gamepad = vg.VX360Gamepad()
 
 def map_motor_position_to_trigger(motor_position):
     # Map the motor position (0-100) to a trigger value (0.0 - 1.0)
@@ -24,7 +24,10 @@ try:
             trigger_value = map_motor_position_to_trigger(motor_position)
             
             # Set the right trigger value on the virtual gamepad
-            gamepad.right_trigger(trigger_value)
+            gamepad.right_trigger_float(trigger_value)
+            
+            # Update the gamepad state
+            gamepad.update()
 
 except KeyboardInterrupt:
     # Close the serial connection on exit
