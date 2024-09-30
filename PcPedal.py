@@ -8,8 +8,17 @@ ser = serial.Serial('COM3', 115200, timeout=1)  # Adjust the port as needed
 gamepad = vg.VX360Gamepad()
 
 def map_motor_position_to_trigger(motor_position):
-    # Map the motor position (0-100) to a trigger value (0.0 - 1.0)
-    return motor_position / 100.0
+    # Define the minimum and maximum motor positions
+    min_motor_position = 17
+    max_motor_position = 331
+    
+    # Normalize the motor position to a 0-1 range
+    normalized_position = (motor_position - min_motor_position) / (max_motor_position - min_motor_position)
+    
+    # Ensure the normalized position is within the 0-1 range
+    normalized_position = max(0.0, min(1.0, normalized_position))
+    
+    return normalized_position
 
 try:
     while True:
