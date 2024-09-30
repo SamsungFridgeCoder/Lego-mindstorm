@@ -17,17 +17,20 @@ try:
         line = ser.readline().decode('utf-8').strip()
         
         if line:
-            # Convert the line to an integer (assuming motor position is sent as an integer)
-            motor_position = int(line)
-            
-            # Map the motor position to a trigger value between 0.0 and 1.0
-            trigger_value = map_motor_position_to_trigger(motor_position)
-            
-            # Set the right trigger value on the virtual gamepad
-            gamepad.right_trigger_float(trigger_value)
-            print(f"Mapped motor position {motor_position} to trigger value {trigger_value}")
-            # Update the gamepad state
-            gamepad.update()
+            try:
+                # Convert the line to an integer (assuming motor position is sent as an integer)
+                motor_position = int(line)
+                
+                # Map the motor position to a trigger value between 0.0 and 1.0
+                trigger_value = map_motor_position_to_trigger(motor_position)
+                
+                # Set the right trigger value on the virtual gamepad
+                gamepad.right_trigger_float(trigger_value)
+                print(f"Mapped motor position {motor_position} to trigger value {trigger_value}")
+                # Update the gamepad state
+                gamepad.update()
+            except:
+                pass
 
 except KeyboardInterrupt:
     # Close the serial connection on exit
