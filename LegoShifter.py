@@ -5,16 +5,15 @@ import math
 import hub
 import json
 
-motor = Motor('E')# Adjust to the correct motor port
-usb = hub.USB_VCP()# Create the USB virtual COM port
+motor = Motor('E')  # Adjust to the correct motor port
+usb = hub.USB_VCP()  # Create the USB virtual COM port
 
 # Main loop to send motor position over USB
 while True:
     motor_position = motor.get_position()
 
-    # Send specific motor position data
-    if 20 <= motor_position <= 70:
-        usb.write(b"-\n")# Send minus (-)
-    elif 320 <= motor_position <= 350:
-        usb.write(b"+\n")# Send plus (+)
+    # Convert motor position to byte string and send it
+    motor_position_str = str(motor_position) + "\n"
+    usb.write(motor_position_str.encode())
+
     wait_for_seconds(0.15)
