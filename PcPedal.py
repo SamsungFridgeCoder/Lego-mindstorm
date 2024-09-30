@@ -30,7 +30,7 @@ try:
                 # Update the gamepad state
                 gamepad.update()
             except:
-                pass
+                continue
 
 except KeyboardInterrupt:
     # Close the serial connection on exit
