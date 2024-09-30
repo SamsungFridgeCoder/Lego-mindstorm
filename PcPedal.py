@@ -15,7 +15,7 @@ try:
     while True:
         # Read a line from the serial port
         line = ser.readline().decode('utf-8').strip()
-        
+        print(f"Raw value: {line}")
         if line:
             try:
                 # Convert the line to an integer (assuming motor position is sent as an integer)
