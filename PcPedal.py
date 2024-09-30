@@ -27,10 +27,9 @@ try:
         line = ser.readline().decode('utf-8').strip()
         print(f"Raw value: {line}")
         if line:
-            try:
-                # Split the line to separate the integer value from the JSON object
-                parts = line.split(' ', 1)
-                motor_position = int(parts[0])
+    try:
+        # Get the first 4 characters from the line
+        motor_position = int(line[:4])
                 
                 # Map the motor position to a trigger value between 0.0 and 1.0
                 trigger_value = map_motor_position_to_trigger(motor_position)
