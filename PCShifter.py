@@ -12,7 +12,7 @@ try:
                 data = ser.readline().decode().strip()  # Read data from LEGO hub
                 if '+' in data:
                     print("SHIFTING UP")
-                    keyboard.press_and_release('e')  # Simulate pressing 'E' for upshift
+                    keyboard.press_and_release('z')  # Simulate pressing 'E' for upshift
                 else:
                     print("SHIFTING DOWN")
                     keyboard.press_and_release('q')  # Simulate pressing 'Q' for downshift
