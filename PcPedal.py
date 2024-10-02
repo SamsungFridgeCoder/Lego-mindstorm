@@ -1,6 +1,5 @@
 import serial
 import vgamepad as vg
-import json
 import re
 
 # Connect to the LEGO hub over USB/Serial
@@ -28,31 +27,24 @@ try:
         line = ser.readline().decode('utf-8').strip()
         if line:
             try:
-                # Use regex to find all JSON objects in the line
-                json_objects = re.findall(r'\{.*?\}', line)
+                # Use regex to extract values between semicolons
+                motor_position_str = re.search(r';(\d+);', line)
                 
-                for json_str in json_objects:
-                    # Parse the JSON object
-                    data = json.loads(json_str)
-                    print(f"Received JSON data: {data}")
+                if motor_position_str:
+                    motor_position = int(motor_position_str.group(1))
+                    print(f"Motor position: {motor_position}")
                     
-                    # Check if the expected structure exists
-                    if 'p' in data and len(data['p']) > 4 and len(data['p'][4]) > 1 and len(data['p'][4][1]) > 0:
-                        # Extract the motor position from the JSON object
-                        motor_position = data['p'][4][1][0]  # Adjusted path
-                        print(f"Motor position: {motor_position}")
-                        
-                        # Map the motor position to a trigger value between 0.0 and 1.0
-                        trigger_value = map_motor_position_to_trigger(motor_position)
-                        print(f"Mapped trigger value: {trigger_value}")
-                        
-                        # Set the right trigger value on the virtual gamepad
-                        gamepad.right_trigger_float(trigger_value)
-                        
-                        # Update the gamepad state
-                        gamepad.update()
-                    else:
-                        print(f"Unexpected data structure: {data}")
+                    # Map the motor position to a trigger value between 0.0 and 1.0
+                    trigger_value = map_motor_position_to_trigger(motor_position)
+                    print(f"Mapped trigger value: {trigger_value}")
+                    
+                    # Set the right trigger value on the virtual gamepad
+                    gamepad.right_trigger_float(trigger_value)
+                    
+                    # Update the gamepad state
+                    gamepad.update()
+                else:
+                    print(f"No motor position found in line: {line}")
             except Exception as e:
                 print(f"Error processing line: {line}, Error: {e}")
                 continue
