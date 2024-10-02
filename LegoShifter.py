@@ -10,7 +10,7 @@ while True:
     motor_position = motor.get_position()
 
     # Convert motor position to a byte string and send it over USB
-    motor_position_str = "{}\n".format(motor_position)
+    motor_position_str = ";{};\n".format(motor_position)
     usb.write(motor_position_str.encode())
 
     # Wait for 0.15 seconds before sending the next position
